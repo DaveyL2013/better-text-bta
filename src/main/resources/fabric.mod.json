@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "bettertext",
+  "version": "${version}",
+
+  "name": "Better Text",
+  "description": "This mod improves text input fields in an UNBELIEVABLE way.",
+  "authors": [
+    "Pedro Ricardo"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+	"icon": "icon.png",
+  "license": "CC0-1.0",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.pedroricardo.bettertext.BetterText"
+    ]
+	},
+  "mixins": [
+      "bettertext.mixins.json"
+  ],
+
+  "depends": {
+		"minecraft": "7.1",
+    "fabricloader": ">=0.15.5"
+  },
+  "suggests": {
+  }
+}

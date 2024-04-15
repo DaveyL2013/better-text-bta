@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.pedroricardo.bettertext.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "GuiAccessors$GuiAccessor",
+    "GuiAccessors$GuiScreenAccessor",
+    "BetterTextChatMixin",
+    "BetterTextFieldGuiMixin",
+    "TextSelectionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
