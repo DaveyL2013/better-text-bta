@@ -4,13 +4,13 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.render.FontRenderer;
+import net.minecraft.client.gui.Screen;
+import net.minecraft.client.render.Font;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-public class GuiAccessors {
+public class Accessors {
 	@Environment(EnvType.CLIENT)
 	@Mixin(value = Gui.class, remap = false)
 	public interface GuiAccessor {
@@ -19,10 +19,10 @@ public class GuiAccessors {
 	}
 
 	@Environment(EnvType.CLIENT)
-	@Mixin(value = GuiScreen.class, remap = false)
-	public interface GuiScreenAccessor {
-		@Accessor("fontRenderer")
-		FontRenderer fontRenderer();
+	@Mixin(value = Screen.class, remap = false)
+	public interface ScreenAccessor {
+		@Accessor("font")
+		Font font();
 
 		@Accessor("mc")
 		Minecraft mc();

@@ -6,10 +6,10 @@
   "mixins": [
   ],
   "client": [
-    "GuiAccessors$GuiAccessor",
-    "GuiAccessors$GuiScreenAccessor",
+    "Accessors$GuiAccessor",
+    "Accessors$ScreenAccessor",
     "BetterTextChatMixin",
-    "BetterTextFieldGuiMixin",
+    "BetterTextFieldElementMixin",
     "TextSelectionMixin"
   ],
   "injectors": {

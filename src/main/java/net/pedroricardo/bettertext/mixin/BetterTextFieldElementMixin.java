@@ -2,12 +2,13 @@ package net.pedroricardo.bettertext.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.TextFieldElement;
 import net.minecraft.client.gui.text.TextFieldEditor;
-import net.minecraft.client.render.FontRenderer;
+import net.minecraft.client.render.Font;
 import net.minecraft.core.util.collection.Pair;
 import net.pedroricardo.bettertext.BetterTextEditor;
+import net.pedroricardo.bettertext.mixin.Accessors.GuiAccessor;
+
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
-@Mixin(value = GuiTextField.class, remap = false)
-public abstract class BetterTextFieldGuiMixin {
+@Mixin(value = TextFieldElement.class, remap = false)
+public abstract class BetterTextFieldElementMixin {
 	@Shadow
 	private TextFieldEditor editor;
 
@@ -33,16 +34,16 @@ public abstract class BetterTextFieldGuiMixin {
 
 	@Shadow
 	@Final
-	private FontRenderer fontRenderer;
+	private Font font;
 
 	@Shadow
 	public abstract String getText();
 
-	@Inject(method = "drawTextBox", at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiTextField;drawString(Lnet/minecraft/client/render/FontRenderer;Ljava/lang/String;III)V", ordinal = 1, shift = At.Shift.AFTER), @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiTextField;drawString(Lnet/minecraft/client/render/FontRenderer;Ljava/lang/String;III)V", ordinal = 2, shift = At.Shift.AFTER), @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiTextField;drawString(Lnet/minecraft/client/render/FontRenderer;Ljava/lang/String;III)V", ordinal = 4, shift = At.Shift.AFTER)})
+	@Inject(method = "drawTextBox", at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/gui/TextFieldElement;drawString(Lnet/minecraft/client/render/Font;Ljava/lang/String;III)V", ordinal = 1, shift = At.Shift.AFTER), @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/TextFieldElement;drawString(Lnet/minecraft/client/render/Font;Ljava/lang/String;III)V", ordinal = 2, shift = At.Shift.AFTER), @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/TextFieldElement;drawString(Lnet/minecraft/client/render/Font;Ljava/lang/String;III)V", ordinal = 4, shift = At.Shift.AFTER)})
 	private void bettertext$drawSelection(CallbackInfo ci) {
 		Pair<Integer, Integer> selection = ((BetterTextEditor)this.editor).getSelectionRange();
 		if (selection != null) {
-			((GuiAccessors.GuiAccessor) this).invokeDrawRect(this.xPosition + 4 + this.fontRenderer.getStringWidth(this.text.substring(0, selection.getLeft())), this.yPosition + (((GuiTextField)(Object)this).height - 8) / 2 - 2, this.xPosition + 4 + this.fontRenderer.getStringWidth(this.text.substring(0, selection.getRight())), this.yPosition + (((GuiTextField)(Object)this).height - 8) / 2 + 10, 0x882929ff);
+			((GuiAccessor) this).invokeDrawRect(this.xPosition + 4 + this.font.getStringWidth(this.text.substring(0, selection.getLeft())), this.yPosition + (((TextFieldElement)(Object)this).height - 8) / 2 - 2, this.xPosition + 4 + this.font.getStringWidth(this.text.substring(0, selection.getRight())), this.yPosition + (((TextFieldElement)(Object)this).height - 8) / 2 + 10, 0x882929ff);
 		}
 	}
 
@@ -53,7 +54,7 @@ public abstract class BetterTextFieldGuiMixin {
 		int width = 0;
 		int position = this.getText().length();
 		while (i < this.getText().length()) {
-			int charWidth = this.fontRenderer.getCharWidth(this.getText().charAt(i));
+			int charWidth = this.font.getCharWidth(this.getText().charAt(i));
 			width += charWidth;
 			if (width - (charWidth / 2) > mouseX - (this.xPosition + 4)) {
 				position = i;
