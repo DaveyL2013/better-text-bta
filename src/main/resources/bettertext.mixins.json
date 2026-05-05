@@ -6,8 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "Accessors$GuiAccessor",
-    "Accessors$ScreenAccessor",
+    "Accessors\$GuiAccessor",
+    "Accessors\$ScreenAccessor",
     "BetterTextChatMixin",
     "BetterTextFieldElementMixin",
     "TextSelectionMixin"
